@@ -8,7 +8,8 @@ import {
     Image, Platform,
 } from 'react-native';
 import AppInput from '@/components/AppInput';
-import * as Google from 'expo-auth-session/providers/google';
+import * as AuthSession from 'expo-auth-session';
+import { supabase } from '@/lib/utils/supabase';
 import styles from './Auth.styles';
 
 // ─── Shared ───────────────────────────────────────────────────────────────────
@@ -29,20 +30,9 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSwitchToLogin, on
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    const [request, response, promptAsync] = Google.useAuthRequest({
-        clientId: 'YOUR_CLIENT_ID',
-    });
-
-    React.useEffect(() => {
-        if (response?.type === 'success') {
-            // TODO: Handle Google registration
-            onAuthComplete?.();
-        }
-    }, [response]);
-
-    const handleRegister = () => {
-        // TODO: Implement registration logic and validation
+    const handleRegister = async () => {
         if (!name || !email || !password || !confirmPassword) {
             alert('Please fill all fields');
             return;
@@ -51,7 +41,70 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSwitchToLogin, on
             alert('Passwords do not match');
             return;
         }
-        onAuthComplete?.();
+        if (password.length < 8) {
+            alert('Password must be at least 8 characters');
+            return;
+        }
+
+        try {
+            setLoading(true);
+            const { data, error } = await supabase.auth.signUp(
+                {
+                    email: email.trim().toLowerCase(),
+                    password,
+                    options: {
+                        data: {
+                            full_name: name.trim(),
+                        },
+                    },
+                }
+            );
+
+            if (error) {
+                // Supabase returns friendly messages for common issues (duplicate email, weak password)
+                alert(error.message);
+                return;
+            }
+
+            // If email confirmations are required, session may be null. Notify the user to verify email.
+            if (data && (data.session || data.user)) {
+                // If session exists, user is signed in immediately (depends on Supabase settings)
+                onAuthComplete?.();
+            } else {
+                alert('Registration successful — please check your email to confirm your account before logging in.');
+                // Optionally switch to login view so the user can attempt login after verification
+                onSwitchToLogin();
+            }
+        } catch (err) {
+            console.error('Registration error', err);
+            alert('An unexpected error occurred during registration. Please try again.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleOAuth = async (provider: 'google' | 'apple') => {
+        try {
+            // Use Expo's redirect URI; for managed workflow proxy is often easiest
+            const redirectTo = AuthSession.makeRedirectUri({ useProxy: true } as any);
+
+            const { error } = await supabase.auth.signInWithOAuth({
+                provider,
+                options: {
+                    redirectTo,
+                },
+            });
+
+            if (error) {
+                alert(error.message);
+                return;
+            }
+
+            // Supabase will open the browser and handle the OAuth flow; after redirect the session will be restored.
+        } catch (err) {
+            console.error('OAuth error', err);
+            alert('OAuth failed. Please try again.');
+        }
     };
 
     const GOOGLE_LOGO = require('@/assets/google-logo.png');
@@ -96,8 +149,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSwitchToLogin, on
                             />
                         </Brick>
                         <Brick>
-                            <TouchableOpacity style={styles.button} onPress={handleRegister}>
-                                <Text style={styles.buttonText}>Register</Text>
+                            <TouchableOpacity style={styles.button} onPress={handleRegister} disabled={loading}>
+                                <Text style={styles.buttonText}>{loading ? 'Registering...' : 'Register'}</Text>
                             </TouchableOpacity>
                         </Brick>
                         <View style={styles.dividerRow}>
@@ -107,13 +160,13 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSwitchToLogin, on
                         </View>
                         <View style={styles.bricksWithLogos}>
                             <Brick>
-                                <TouchableOpacity style={styles.socialButton} onPress={() => promptAsync()} disabled={!request}>
+                                <TouchableOpacity style={styles.socialButton} onPress={() => handleOAuth('google')}>
                                     <Image source={GOOGLE_LOGO} style={styles.socialIcon} resizeMode="contain" />
                                 </TouchableOpacity>
                             </Brick>
                             {Platform.OS === 'ios' && (
                                 <Brick>
-                                    <TouchableOpacity style={styles.socialButton} onPress={() => alert('Apple registration (stub)')}>
+                                    <TouchableOpacity style={styles.socialButton} onPress={() => handleOAuth('apple')}>
                                         <Image source={APPLE_LOGO} style={styles.socialIcon} resizeMode="contain" />
                                     </TouchableOpacity>
                                 </Brick>
@@ -139,11 +192,38 @@ const Auth: React.FC<AuthProps> = ({ onAuthComplete }) => {
     const [isLogin, setIsLogin] = useState(true);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
 
 
-    const handleLogin = () => {
-        // TODO: Implement login logic
-        onAuthComplete?.();
+    const handleLogin = async () => {
+        if (!email || !password) {
+            alert('Please enter email and password');
+            return;
+        }
+        try {
+            setLoading(true);
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: email.trim().toLowerCase(),
+                password,
+            });
+
+            if (error) {
+                alert(error.message);
+                return;
+            }
+
+            if (data?.session || data?.user) {
+                onAuthComplete?.();
+            } else {
+                alert('Login successful.');
+                onAuthComplete?.();
+            }
+        } catch (err) {
+            console.error('Login error', err);
+            alert('An unexpected error occurred during login.');
+        } finally {
+            setLoading(false);
+        }
     };
 
     const GOOGLE_LOGO = require('@/assets/google-logo.png');
@@ -178,11 +258,11 @@ const Auth: React.FC<AuthProps> = ({ onAuthComplete }) => {
                                     />
                                 </Brick>
                                 <Brick>
-                                    <TouchableOpacity style={styles.button} onPress={handleLogin}>
-                                        <Text style={styles.buttonText}>Login</Text>
+                                    <TouchableOpacity style={styles.button} onPress={handleLogin} disabled={loading}>
+                                        <Text style={styles.buttonText}>{loading ? 'Logging in...' : 'Login'}</Text>
                                     </TouchableOpacity>
                                 </Brick>
-                                {/* TODO: Remove skip login before release */}
+                                {/* temporary skip-login helper (keeps onboarding flow convenient during development) */}
                                 <Brick>
                                     <TouchableOpacity style={styles.skipButton} onPress={() => onAuthComplete?.()}>
                                         <Text style={styles.skipText}>Skip for now</Text>
