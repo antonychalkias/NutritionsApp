@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "NutritionsApp",
+    "slug": "nutritionsapp",
+    "version": "1.0.0",
+    "icon": "./src/assets/spartan-macro.png",
+    "entryPoint": "src/app/index.tsx",
+    "scheme": "nutritionsapp",
+    "backgroundColor": "#0a0a0a",
+    "android": {
+      "backgroundColor": "#0a0a0a"
+    },
+    "ios": {
+      "backgroundColor": "#0a0a0a"
+    },
+    "plugins": [
+      [
+        "expo-system-ui",
+        {
+          "userInterfaceStyle": "dark"
+        }
+      ]
+    ]
+  }
+}

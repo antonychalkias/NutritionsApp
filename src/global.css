@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+/* NOTE: This project is a React Native / Expo app. We only keep the color variables here.
+   Web/html-specific global styles (html, body, #root, padding/margins) were removed because
+   they were introducing top/bottom white bands. Text and other web styles can be restored
+   later if/when web support is intentionally added. */
+
+:root {
+  --background: 0 0% 4%;
+  --foreground: 0 0% 96%;
+  --card: 0 0% 7%;
+  --card-foreground: 0 0% 96%;
+  --popover: 0 0% 7%;
+  --popover-foreground: 0 0% 96%;
+  --primary: 0 75% 55%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 0 0% 12%;
+  --secondary-foreground: 0 0% 96%;
+  --muted: 0 0% 12%;
+  --muted-foreground: 0 0% 55%;
+  --accent: 0 75% 55%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 96%;
+  --border: 0 0% 14%;
+  --input: 0 0% 14%;
+  --ring: 0 75% 55%;
+  --radius: 0.5rem;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --glow-primary: 0 0 40px hsl(0 75% 55% / 0.15);
+  --glow-strong: 0 0 80px hsl(0 75% 55% / 0.25);
+}
