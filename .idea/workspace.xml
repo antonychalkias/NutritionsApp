@@ -5,29 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6393c375-45e1-40e7-9671-51b4bf44d93d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.github/copilot-instructions.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/copilot.data.migration.ask2agent.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-options.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/babel.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/.keep" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/apple-logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/google-logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/spartan-macro.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/AppInput.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/constants/theme.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/global.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/Auth/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/Loading/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/Onboarding/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/AppInput.styles.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/utils/checks.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/utils/supabase.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Auth/Auth.styles.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Error/Error.styles.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Error/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Loading/Loading.styles.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Loading/index.styles.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Onboarding/Onboarding.styles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/copilot-instructions.md" beforeDir="false" afterPath="$PROJECT_DIR$/.github/copilot-instructions.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AppInput.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AppInput.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Auth/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Auth/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Loading/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Loading/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Onboarding/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Onboarding/index.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

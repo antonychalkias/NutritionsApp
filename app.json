@@ -19,7 +19,8 @@
         {
           "userInterfaceStyle": "dark"
         }
-      ]
+      ],
+      "expo-secure-store"
     ]
   }
 }

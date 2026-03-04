@@ -11,3 +11,4 @@ We use Copilot!
 8. Styles must be consistent.
 9. Use the color palette.
 10. Sizes for the inputs will be small, large, xlarge.
+11. All styles must have the same name with the component and be in the same folder as the component.

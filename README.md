@@ -21,6 +21,15 @@ Each page has its own folder and component under `src/pages`.
 - All inputs use the reusable AppInput component, supporting three sizes: small, large, xl.
 - The color palette and design system are applied for backgrounds, accents, and text.
 
+### /error — Error (src/pages/Error)
+**What the user sees:**
+- A simple error page shown when no internet connection is detected on startup.
+- Shows the app logo, a short message, and a Retry button which brings the user back to the Loading screen to re-run connectivity checks.
+
+### /onboarding — Onboarding (src/pages/Onboarding)
+**What the user sees:**
+- 4-step onboarding wizard (profile, body, goal, activity).
+
 ## Entry Point
 
 The application starts from `src/app/index.tsx`, which renders the Loading page initially, then the Auth page.
@@ -45,6 +54,7 @@ You can start developing by editing the files inside the **src/pages** directory
 
 - `src/app/index.tsx` — Application entry point
 - `src/pages/Loading` — Loading screen component
+- `src/pages/Error` — Error screen shown when no internet connection is available
 - `src/pages/Auth` — Login/registration screen component
 - `src/pages/Onboarding` — 4-step onboarding wizard (profile, body, goal, activity)
 - `src/components/AppInput.tsx` — Reusable input component with size support
