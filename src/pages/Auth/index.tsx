@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import AppInput from '@/components/AppInput';
 import * as AuthSession from 'expo-auth-session';
-import { supabase } from '@/lib/utils/supabase';
+import { useAuth } from '@/lib/auth/AuthProvider';
 import styles from './Auth.styles';
 
 // ─── Shared ───────────────────────────────────────────────────────────────────
@@ -48,16 +48,10 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSwitchToLogin, on
 
         try {
             setLoading(true);
-            const { data, error } = await supabase.auth.signUp(
-                {
-                    email: email.trim().toLowerCase(),
-                    password,
-                    options: {
-                        data: {
-                            full_name: name.trim(),
-                        },
-                    },
-                }
+            const { data, error } = await auth.signUp(
+                email.trim().toLowerCase(),
+                password,
+                { data: { full_name: name.trim() } }
             );
 
             if (error) {
@@ -88,12 +82,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSwitchToLogin, on
             // Use Expo's redirect URI; for managed workflow proxy is often easiest
             const redirectTo = AuthSession.makeRedirectUri({ useProxy: true } as any);
 
-            const { error } = await supabase.auth.signInWithOAuth({
-                provider,
-                options: {
-                    redirectTo,
-                },
-            });
+            const { error } = await auth.signInWithOAuth(provider, { redirectTo });
 
             if (error) {
                 alert(error.message);
@@ -202,10 +191,7 @@ const Auth: React.FC<AuthProps> = ({ onAuthComplete }) => {
         }
         try {
             setLoading(true);
-            const { data, error } = await supabase.auth.signInWithPassword({
-                email: email.trim().toLowerCase(),
-                password,
-            });
+            const { data, error } = await auth.signInWithPassword(email.trim().toLowerCase(), password);
 
             if (error) {
                 alert(error.message);
@@ -228,6 +214,9 @@ const Auth: React.FC<AuthProps> = ({ onAuthComplete }) => {
 
     const GOOGLE_LOGO = require('@/assets/google-logo.png');
     const APPLE_LOGO = require('@/assets/apple-logo.png');
+
+    // use centralized auth helpers
+    const auth = useAuth();
 
     return (
         <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
@@ -262,12 +251,6 @@ const Auth: React.FC<AuthProps> = ({ onAuthComplete }) => {
                                         <Text style={styles.buttonText}>{loading ? 'Logging in...' : 'Login'}</Text>
                                     </TouchableOpacity>
                                 </Brick>
-                                {/* temporary skip-login helper (keeps onboarding flow convenient during development) */}
-                                <Brick>
-                                    <TouchableOpacity style={styles.skipButton} onPress={() => onAuthComplete?.()}>
-                                        <Text style={styles.skipText}>Skip for now</Text>
-                                    </TouchableOpacity>
-                                </Brick>
                                 <View style={styles.dividerRow}>
                                     <View style={styles.divider} />
                                     <Text style={styles.orText}>OR</Text>
@@ -275,13 +258,13 @@ const Auth: React.FC<AuthProps> = ({ onAuthComplete }) => {
                                 </View>
                                 <View style={styles.bricksWithLogos}>
                                     <Brick>
-                                        <TouchableOpacity style={styles.socialButton} onPress={() => alert('Google login (stub)')}>
+                                        <TouchableOpacity style={styles.socialButton} onPress={() => auth.signInWithOAuth('google')}>
                                             <Image source={GOOGLE_LOGO} style={styles.socialIcon} resizeMode="contain" />
                                         </TouchableOpacity>
                                     </Brick>
                                     {Platform.OS === 'ios' && (
                                         <Brick>
-                                            <TouchableOpacity style={styles.socialButton} onPress={() => alert('Apple login (stub)')}>
+                                            <TouchableOpacity style={styles.socialButton} onPress={() => auth.signInWithOAuth('apple')}>
                                                 <Image source={APPLE_LOGO} style={styles.socialIcon} resizeMode="contain" />
                                             </TouchableOpacity>
                                         </Brick>

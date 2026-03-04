@@ -16,13 +16,22 @@ export default StyleSheet.create({
     alignItems: 'center',
     marginBottom: 28,
   },
-  headerLabel: {
+  logoutButton: {
+    position: 'absolute',
+    right: 20,
+    top: 0,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    backgroundColor: COLORS.card,
+  },
+  logoutText: {
     color: COLORS.mutedForeground,
     fontSize: 13,
     fontFamily: 'Inter',
-    marginBottom: 10,
-    letterSpacing: 0.5,
-    textTransform: 'uppercase',
+    letterSpacing: 0.2,
   },
   stepRow: { flexDirection: 'row', gap: 8 },
   stepDot: { height: 6, borderRadius: 3 },
@@ -124,4 +133,3 @@ export default StyleSheet.create({
   nextButton: { flex: 2, paddingVertical: 14, borderRadius: 10, backgroundColor: COLORS.primary, alignItems: 'center', shadowColor: COLORS.primary, shadowOffset: { width: 0, height: 3 }, shadowOpacity: 0.25, shadowRadius: 10, elevation: 4 },
   nextButtonText: { color: COLORS.primaryForeground, fontSize: 16, fontFamily: 'Space Grotesk', fontWeight: '700', letterSpacing: 0.4 },
 });
-

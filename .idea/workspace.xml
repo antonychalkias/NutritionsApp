@@ -5,11 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6393c375-45e1-40e7-9671-51b4bf44d93d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/pages/Auth/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/supabase/migrations/001_enable_rls_profiles.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/supabase/migrations/002_secure_public_users.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/utils/supabase.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/utils/supabase.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Auth/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Auth/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Onboarding/Onboarding.styles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Onboarding/Onboarding.styles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Onboarding/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Onboarding/index.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -2,15 +2,14 @@ import React, { useState } from 'react';
 import {
   View,
   Text,
-  StyleSheet,
   TouchableOpacity,
   ScrollView,
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import { COLORS } from '@/constants/theme';
 import AppInput from '@/components/AppInput';
 import styles from './Onboarding.styles';
+import { supabase } from '@/lib/utils/supabase';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -380,10 +379,22 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
       >
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.headerLabel}>
+          <Text style={styles.subtitle}>
             Step {step + 1} of {STEPS.length}
           </Text>
           <StepIndicator current={step} total={STEPS.length} />
+          <TouchableOpacity
+            style={styles.logoutButton}
+            onPress={async () => {
+              try {
+                await supabase.auth.signOut();
+              } catch (err) {
+                console.error('Error signing out', err);
+              }
+            }}
+          >
+            <Text style={styles.logoutText}>Logout</Text>
+          </TouchableOpacity>
         </View>
 
         {/* Step content */}
