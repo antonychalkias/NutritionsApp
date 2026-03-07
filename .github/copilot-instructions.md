@@ -12,3 +12,4 @@ We use Copilot!
 9. Use the color palette.
 10. Sizes for the inputs will be small, large, xlarge.
 11. All styles must have the same name with the component and be in the same folder as the component.
+12. Each call in the database must be in a function in a seperate file and be called in the component.

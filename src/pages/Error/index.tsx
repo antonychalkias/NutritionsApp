@@ -7,15 +7,14 @@ interface ErrorProps {
 }
 
 const ErrorPage: React.FC<ErrorProps> = ({ onRetry }) => {
-  const s: any = styles;
   return (
-    <View style={s.container}>
-      <Image source={require('@/assets/spartan-macro.png')} style={s.logo} resizeMode="contain" />
-      <Text style={s.title}>No Internet Connection</Text>
-      <Text style={s.message}>Please check your connection and try again.</Text>
+    <View style={styles.container}>
+      <Image source={require('@/assets/spartan-macro.png')} style={styles.logo} resizeMode="contain" />
+      <Text style={styles.title}>No Internet Connection</Text>
+      <Text style={styles.message}>Please check your connection and try again.</Text>
 
-      <TouchableOpacity style={s.retryButton} onPress={onRetry} activeOpacity={0.8}>
-        <Text style={s.retryButtonText}>Retry</Text>
+      <TouchableOpacity style={styles.retryButton} onPress={onRetry} activeOpacity={0.8}>
+        <Text style={styles.retryButtonText}>Retry</Text>
       </TouchableOpacity>
     </View>
   );

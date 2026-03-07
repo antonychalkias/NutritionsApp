@@ -5,18 +5,16 @@ import {
     TouchableOpacity,
     KeyboardAvoidingView,
     ScrollView,
-    Image, Platform,
+    Image,
+    Platform,
 } from 'react-native';
 import AppInput from '@/components/AppInput';
-import * as AuthSession from 'expo-auth-session';
 import { useAuth } from '@/lib/auth/AuthProvider';
 import styles from './Auth.styles';
 
-// ─── Shared ───────────────────────────────────────────────────────────────────
-
-const Brick: React.FC<{ children: React.ReactNode; style?: any }> = ({ children, style }) => (
-    <View style={[styles.brick, style]}>{children}</View>
-);
+const LOGO = require('@/assets/theron-logo-transparent.png');
+const GOOGLE_LOGO = require('@/assets/google-logo.png');
+const APPLE_LOGO = require('@/assets/apple-logo.png');
 
 // ─── Registration Form ────────────────────────────────────────────────────────
 
@@ -26,6 +24,7 @@ interface RegistrationFormProps {
 }
 
 const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSwitchToLogin, onAuthComplete }) => {
+    const auth = useAuth();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -45,7 +44,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSwitchToLogin, on
             alert('Password must be at least 8 characters');
             return;
         }
-
         try {
             setLoading(true);
             const { data, error } = await auth.signUp(
@@ -53,20 +51,11 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSwitchToLogin, on
                 password,
                 { data: { full_name: name.trim() } }
             );
-
-            if (error) {
-                // Supabase returns friendly messages for common issues (duplicate email, weak password)
-                alert(error.message);
-                return;
-            }
-
-            // If email confirmations are required, session may be null. Notify the user to verify email.
+            if (error) { alert(error.message); return; }
             if (data && (data.session || data.user)) {
-                // If session exists, user is signed in immediately (depends on Supabase settings)
                 onAuthComplete?.();
             } else {
                 alert('Registration successful — please check your email to confirm your account before logging in.');
-                // Optionally switch to login view so the user can attempt login after verification
                 onSwitchToLogin();
             }
         } catch (err) {
@@ -77,95 +66,43 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSwitchToLogin, on
         }
     };
 
-    const handleOAuth = async (provider: 'google' | 'apple') => {
-        try {
-            // Use Expo's redirect URI; for managed workflow proxy is often easiest
-            const redirectTo = AuthSession.makeRedirectUri({ useProxy: true } as any);
-
-            const { error } = await auth.signInWithOAuth(provider, { redirectTo });
-
-            if (error) {
-                alert(error.message);
-                return;
-            }
-
-            // Supabase will open the browser and handle the OAuth flow; after redirect the session will be restored.
-        } catch (err) {
-            console.error('OAuth error', err);
-            alert('OAuth failed. Please try again.');
-        }
-    };
-
-    const GOOGLE_LOGO = require('@/assets/google-logo.png');
-    const APPLE_LOGO = require('@/assets/apple-logo.png');
-
     return (
-        <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : Platform.OS === 'android' ? 'height' : undefined} keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 24}>
             <ScrollView contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps="handled">
-                <View style={styles.rootInner}>
+                <View style={styles.logoContainer}>
+                    <Image source={LOGO} style={styles.logo} resizeMode="contain" />
+                </View>
+                <View style={styles.header}>
                     <Text style={styles.title}>Create Account</Text>
                     <Text style={styles.subtitle}>Register to start your fitness journey.</Text>
-                    <View style={styles.bricksContainer}>
-                        <Brick>
-                            <AppInput size="large" placeholder="Name" value={name} onChangeText={setName} />
-                        </Brick>
-                        <Brick>
-                            <AppInput
-                                size="large"
-                                placeholder="Email"
-                                value={email}
-                                onChangeText={setEmail}
-                                autoCapitalize="none"
-                                keyboardType="email-address"
-                            />
-                        </Brick>
-                        <Brick>
-                            <AppInput
-                                size="large"
-                                placeholder="Password"
-                                value={password}
-                                onChangeText={setPassword}
-                                secureTextEntry
-                            />
-                        </Brick>
-                        <Brick>
-                            <AppInput
-                                size="large"
-                                placeholder="Confirm Password"
-                                value={confirmPassword}
-                                onChangeText={setConfirmPassword}
-                                secureTextEntry
-                            />
-                        </Brick>
-                        <Brick>
-                            <TouchableOpacity style={styles.button} onPress={handleRegister} disabled={loading}>
-                                <Text style={styles.buttonText}>{loading ? 'Registering...' : 'Register'}</Text>
-                            </TouchableOpacity>
-                        </Brick>
-                        <View style={styles.dividerRow}>
-                            <View style={styles.divider} />
-                            <Text style={styles.orText}>OR</Text>
-                            <View style={styles.divider} />
-                        </View>
-                        <View style={styles.bricksWithLogos}>
-                            <Brick>
-                                <TouchableOpacity style={styles.socialButton} onPress={() => handleOAuth('google')}>
-                                    <Image source={GOOGLE_LOGO} style={styles.socialIcon} resizeMode="contain" />
-                                </TouchableOpacity>
-                            </Brick>
-                            {Platform.OS === 'ios' && (
-                                <Brick>
-                                    <TouchableOpacity style={styles.socialButton} onPress={() => handleOAuth('apple')}>
-                                        <Image source={APPLE_LOGO} style={styles.socialIcon} resizeMode="contain" />
-                                    </TouchableOpacity>
-                                </Brick>
-                            )}
-                        </View>
-                    </View>
-                    <TouchableOpacity onPress={onSwitchToLogin}>
-                        <Text style={styles.switchText}>Already have an account? Login</Text>
-                    </TouchableOpacity>
                 </View>
+                <View style={styles.form}>
+                    <AppInput size="large" placeholder="Name" value={name} onChangeText={setName} />
+                    <AppInput size="large" placeholder="Email" value={email} onChangeText={setEmail} autoCapitalize="none" keyboardType="email-address" />
+                    <AppInput size="large" placeholder="Password" value={password} onChangeText={setPassword} secureTextEntry />
+                    <AppInput size="large" placeholder="Confirm Password" value={confirmPassword} onChangeText={setConfirmPassword} secureTextEntry />
+                </View>
+                <TouchableOpacity style={styles.button} onPress={handleRegister} disabled={loading}>
+                    <Text style={styles.buttonText}>{loading ? 'Registering...' : 'Register'}</Text>
+                </TouchableOpacity>
+                <View style={styles.dividerRow}>
+                    <View style={styles.divider} />
+                    <Text style={styles.orText}>OR</Text>
+                    <View style={styles.divider} />
+                </View>
+                <View style={styles.socialRow}>
+                    <TouchableOpacity style={styles.socialButton} onPress={() => auth.signInWithOAuth('google')}>
+                        <Image source={GOOGLE_LOGO} style={styles.socialIcon} resizeMode="contain" />
+                    </TouchableOpacity>
+                    {Platform.OS === 'ios' && (
+                        <TouchableOpacity style={styles.socialButton} onPress={() => auth.signInWithOAuth('apple')}>
+                            <Image source={APPLE_LOGO} style={styles.socialIcon} resizeMode="contain" />
+                        </TouchableOpacity>
+                    )}
+                </View>
+                <TouchableOpacity onPress={onSwitchToLogin}>
+                    <Text style={styles.switchText}>Already have an account? Login</Text>
+                </TouchableOpacity>
             </ScrollView>
         </KeyboardAvoidingView>
     );
@@ -178,11 +115,15 @@ interface AuthProps {
 }
 
 const Auth: React.FC<AuthProps> = ({ onAuthComplete }) => {
+    const auth = useAuth();
     const [isLogin, setIsLogin] = useState(true);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
 
+    if (!isLogin) {
+        return <RegistrationForm onSwitchToLogin={() => setIsLogin(true)} onAuthComplete={onAuthComplete} />;
+    }
 
     const handleLogin = async () => {
         if (!email || !password) {
@@ -192,16 +133,10 @@ const Auth: React.FC<AuthProps> = ({ onAuthComplete }) => {
         try {
             setLoading(true);
             const { data, error } = await auth.signInWithPassword(email.trim().toLowerCase(), password);
-
-            if (error) {
-                alert(error.message);
-                return;
-            }
-
+            if (error) { alert(error.message); return; }
             if (data?.session || data?.user) {
                 onAuthComplete?.();
             } else {
-                alert('Login successful.');
                 onAuthComplete?.();
             }
         } catch (err) {
@@ -212,79 +147,44 @@ const Auth: React.FC<AuthProps> = ({ onAuthComplete }) => {
         }
     };
 
-    const GOOGLE_LOGO = require('@/assets/google-logo.png');
-    const APPLE_LOGO = require('@/assets/apple-logo.png');
-
-    // use centralized auth helpers
-    const auth = useAuth();
-
     return (
-        <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : Platform.OS === 'android' ? 'height' : undefined} keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 24}>
             <ScrollView contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps="handled">
-                <View style={styles.rootInner}>
-                    {isLogin ? (
-                        <>
-                            <Text style={styles.title}>Welcome Back</Text>
-                            <Text style={styles.subtitle}>Log in to track your macros.</Text>
-                            <View style={styles.bricksContainer}>
-                                <Brick>
-                                    <AppInput
-                                        size="large"
-                                        placeholder="Email"
-                                        value={email}
-                                        onChangeText={setEmail}
-                                        autoCapitalize="none"
-                                        keyboardType="email-address"
-                                    />
-                                </Brick>
-                                <Brick>
-                                    <AppInput
-                                        size="large"
-                                        placeholder="Password"
-                                        value={password}
-                                        onChangeText={setPassword}
-                                        secureTextEntry
-                                    />
-                                </Brick>
-                                <Brick>
-                                    <TouchableOpacity style={styles.button} onPress={handleLogin} disabled={loading}>
-                                        <Text style={styles.buttonText}>{loading ? 'Logging in...' : 'Login'}</Text>
-                                    </TouchableOpacity>
-                                </Brick>
-                                <View style={styles.dividerRow}>
-                                    <View style={styles.divider} />
-                                    <Text style={styles.orText}>OR</Text>
-                                    <View style={styles.divider} />
-                                </View>
-                                <View style={styles.bricksWithLogos}>
-                                    <Brick>
-                                        <TouchableOpacity style={styles.socialButton} onPress={() => auth.signInWithOAuth('google')}>
-                                            <Image source={GOOGLE_LOGO} style={styles.socialIcon} resizeMode="contain" />
-                                        </TouchableOpacity>
-                                    </Brick>
-                                    {Platform.OS === 'ios' && (
-                                        <Brick>
-                                            <TouchableOpacity style={styles.socialButton} onPress={() => auth.signInWithOAuth('apple')}>
-                                                <Image source={APPLE_LOGO} style={styles.socialIcon} resizeMode="contain" />
-                                            </TouchableOpacity>
-                                        </Brick>
-                                    )}
-                                </View>
-                            </View>
-                            <TouchableOpacity onPress={() => setIsLogin(false)}>
-                                <Text style={styles.switchText}>Don't have an account? Register</Text>
-                            </TouchableOpacity>
-                        </>
-                    ) : (
-                        <RegistrationForm onSwitchToLogin={() => setIsLogin(true)} onAuthComplete={onAuthComplete} />
+                <View style={styles.logoContainer}>
+                    <Image source={LOGO} style={styles.logo} resizeMode="contain" />
+                </View>
+                <View style={styles.header}>
+                    <Text style={styles.title}>Welcome Back</Text>
+                    <Text style={styles.subtitle}>Log in to track your macros.</Text>
+                </View>
+                <View style={styles.form}>
+                    <AppInput size="large" placeholder="Email" value={email} onChangeText={setEmail} autoCapitalize="none" keyboardType="email-address" />
+                    <AppInput size="large" placeholder="Password" value={password} onChangeText={setPassword} secureTextEntry />
+                </View>
+                <TouchableOpacity style={styles.button} onPress={handleLogin} disabled={loading}>
+                    <Text style={styles.buttonText}>{loading ? 'Logging in...' : 'Login'}</Text>
+                </TouchableOpacity>
+                <View style={styles.dividerRow}>
+                    <View style={styles.divider} />
+                    <Text style={styles.orText}>OR</Text>
+                    <View style={styles.divider} />
+                </View>
+                <View style={styles.socialRow}>
+                    <TouchableOpacity style={styles.socialButton} onPress={() => auth.signInWithOAuth('google')}>
+                        <Image source={GOOGLE_LOGO} style={styles.socialIcon} resizeMode="contain" />
+                    </TouchableOpacity>
+                    {Platform.OS === 'ios' && (
+                        <TouchableOpacity style={styles.socialButton} onPress={() => auth.signInWithOAuth('apple')}>
+                            <Image source={APPLE_LOGO} style={styles.socialIcon} resizeMode="contain" />
+                        </TouchableOpacity>
                     )}
                 </View>
+                <TouchableOpacity onPress={() => setIsLogin(false)}>
+                    <Text style={styles.switchText}>Don't have an account? Register</Text>
+                </TouchableOpacity>
             </ScrollView>
         </KeyboardAvoidingView>
     );
 };
-
-/* Styles moved to ./Auth.styles.ts to follow project conventions (component + styles file in same folder) */
-
 
 export default Auth;

@@ -13,7 +13,7 @@ create table if not exists public.profiles (
   timezone text,
   role text default 'user',                -- optional role field
   metadata jsonb,
-  is_onboarded boolean default false,
+  is_onboarded boolean not null default false,
   last_active timestamptz,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
@@ -37,8 +37,9 @@ create trigger profiles_set_updated_at
 -- 2) Enable Row Level Security
 alter table public.profiles enable row level security;
 
--- 3) Revoke default public privileges (optional but recommended)
-revoke all on table public.profiles from public;
+-- 3) Revoke default public privileges and grant explicitly to authenticated role
+revoke all on table public.profiles from public, anon;
+grant select, insert, update, delete on table public.profiles to authenticated;
 
 -- 4) Policies: allow users to manage their own profile only
 -- Note: auth.uid() returns the currently authenticated user's uuid in Supabase

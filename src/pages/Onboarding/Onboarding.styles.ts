@@ -2,20 +2,14 @@ import { StyleSheet } from 'react-native';
 import { COLORS } from '@/constants/theme';
 
 export default StyleSheet.create({
-  root: {
-    flex: 1,
-    backgroundColor: COLORS.background,
-  },
+  root: { flex: 1, backgroundColor: COLORS.background },
   scrollContent: {
     flexGrow: 1,
     paddingHorizontal: 20,
     paddingTop: 24,
     paddingBottom: 40,
   },
-  header: {
-    alignItems: 'center',
-    marginBottom: 28,
-  },
+  header: { alignItems: 'center', marginBottom: 28 },
   logoutButton: {
     position: 'absolute',
     right: 20,
@@ -33,10 +27,14 @@ export default StyleSheet.create({
     fontFamily: 'Inter',
     letterSpacing: 0.2,
   },
+
+  // ─── Step indicator ───────────────────────────────────────────
   stepRow: { flexDirection: 'row', gap: 8 },
   stepDot: { height: 6, borderRadius: 3 },
   stepDotActive: { width: 24, backgroundColor: COLORS.primary },
   stepDotInactive: { width: 8, backgroundColor: COLORS.border },
+
+  // ─── Section header ───────────────────────────────────────────
   sectionHeader: { marginBottom: 20, alignItems: 'center' },
   title: {
     fontSize: 26,
@@ -54,6 +52,8 @@ export default StyleSheet.create({
     textAlign: 'center',
     lineHeight: 22,
   },
+
+  // ─── Card & labels ────────────────────────────────────────────
   stepContent: { width: '100%' },
   card: {
     backgroundColor: COLORS.card,
@@ -73,27 +73,94 @@ export default StyleSheet.create({
     fontSize: 13,
     fontFamily: 'Inter',
     marginBottom: 6,
-    marginTop: 4,
+    marginTop: 12,
     letterSpacing: 0.3,
     textTransform: 'uppercase',
   },
-  chipRow: { flexDirection: 'row', gap: 10, marginTop: 4, marginBottom: 6, flexWrap: 'wrap' },
+
+  // ─── Field error (displayed below each input) ─────────────────
+  fieldError: {
+    color: COLORS.destructive,
+    fontSize: 12,
+    fontFamily: 'Inter',
+    marginTop: 4,
+    marginBottom: 2,
+    marginLeft: 2,
+  },
+  inputError: {
+    borderColor: COLORS.destructive,
+  },
+
+  // ─── Unit toggle ──────────────────────────────────────────────
+  unitToggleRow: {
+    flexDirection: 'row',
+    alignSelf: 'flex-start',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    overflow: 'hidden',
+    marginTop: 4,
+    marginBottom: 4,
+  },
+  unitToggleBtn: {
+    paddingVertical: 7,
+    paddingHorizontal: 20,
+    backgroundColor: COLORS.card,
+  },
+  unitToggleBtnActive: {
+    backgroundColor: COLORS.primary,
+  },
+  unitToggleText: {
+    color: COLORS.mutedForeground,
+    fontSize: 13,
+    fontFamily: 'Inter',
+    fontWeight: '600',
+  },
+  unitToggleTextActive: {
+    color: COLORS.primaryForeground,
+  },
+
+  // ─── Gender chips ─────────────────────────────────────────────
+  chipRow: {
+    flexDirection: 'row',
+    gap: 10,
+    marginTop: 4,
+    marginBottom: 2,
+    flexWrap: 'wrap',
+  },
   chip: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 8,
-    paddingHorizontal: 16,
+    paddingVertical: 9,
+    paddingHorizontal: 18,
     borderRadius: 20,
     borderWidth: 1,
     borderColor: COLORS.border,
     backgroundColor: COLORS.secondary,
     gap: 6,
   },
-  chipSelected: { borderColor: COLORS.primary, backgroundColor: COLORS.primary + '22' },
-  chipEmoji: { fontSize: 16, color: COLORS.mutedForeground },
-  chipEmojiSelected: { color: COLORS.primaryForeground, fontSize: 20 },
-  chipText: { color: COLORS.mutedForeground, fontSize: 14, fontFamily: 'Inter', fontWeight: '500' },
-  chipTextSelected: { color: COLORS.primaryForeground, fontWeight: '700', fontSize: 16 },
+  chipSelected: {
+    borderColor: COLORS.primary,
+    backgroundColor: COLORS.primary + '22',
+  },
+  // Fixed size — no changes on selection to prevent vertical misalignment
+  chipEmoji: {
+    fontSize: 16,
+    lineHeight: 20,
+  },
+  chipText: {
+    color: COLORS.mutedForeground,
+    fontSize: 14,
+    fontFamily: 'Inter',
+    fontWeight: '500',
+    lineHeight: 20,
+  },
+  chipTextSelected: {
+    color: COLORS.primaryForeground,
+    fontWeight: '700',
+  },
+
+  // ─── Goal / Activity cards ────────────────────────────────────
   goalColumn: { gap: 12, marginBottom: 8 },
   goalCard: {
     flexDirection: 'row',
@@ -125,11 +192,43 @@ export default StyleSheet.create({
   goalTextBlock: { flex: 1, justifyContent: 'center', minWidth: 120 },
   goalRadio: { width: 20, height: 20, borderRadius: 10, borderWidth: 2, borderColor: COLORS.border },
   goalRadioSelected: { borderColor: COLORS.primary, backgroundColor: COLORS.primary },
-  errorText: { color: COLORS.destructive, fontSize: 14, fontFamily: 'Inter', textAlign: 'center', marginTop: 12, marginBottom: 4 },
-  navRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 24, gap: 12 },
+
+  // ─── Navigation ───────────────────────────────────────────────
+  navRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 24,
+    gap: 12,
+  },
   backPlaceholder: { flex: 1 },
-  backButton: { flex: 1, paddingVertical: 12, borderRadius: 10, borderWidth: 1, borderColor: COLORS.border, alignItems: 'center', backgroundColor: COLORS.secondary },
+  backButton: {
+    flex: 1,
+    paddingVertical: 12,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    alignItems: 'center',
+    backgroundColor: COLORS.secondary,
+  },
   backButtonText: { color: COLORS.cardForeground, fontSize: 15, fontFamily: 'Inter', fontWeight: '600' },
-  nextButton: { flex: 2, paddingVertical: 14, borderRadius: 10, backgroundColor: COLORS.primary, alignItems: 'center', shadowColor: COLORS.primary, shadowOffset: { width: 0, height: 3 }, shadowOpacity: 0.25, shadowRadius: 10, elevation: 4 },
-  nextButtonText: { color: COLORS.primaryForeground, fontSize: 16, fontFamily: 'Space Grotesk', fontWeight: '700', letterSpacing: 0.4 },
+  nextButton: {
+    flex: 2,
+    paddingVertical: 14,
+    borderRadius: 10,
+    backgroundColor: COLORS.primary,
+    alignItems: 'center',
+    shadowColor: COLORS.primary,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.25,
+    shadowRadius: 10,
+    elevation: 4,
+  },
+  nextButtonText: {
+    color: COLORS.primaryForeground,
+    fontSize: 16,
+    fontFamily: 'Space Grotesk',
+    fontWeight: '700',
+    letterSpacing: 0.4,
+  },
 });

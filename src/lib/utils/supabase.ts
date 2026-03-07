@@ -1,6 +1,6 @@
 import 'react-native-url-polyfill/auto'
 import * as SecureStore from 'expo-secure-store'
-import { createClient, processLock } from '@supabase/supabase-js'
+import { createClient } from '@supabase/supabase-js'
 
 // Minimal SecureStore adapter implementing getItem/setItem/removeItem for supabase-js
 const SecureStoreAdapter = {
@@ -29,15 +29,21 @@ const SecureStoreAdapter = {
   },
 };
 
+const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL;
+const supabaseKey = process.env.EXPO_PUBLIC_SUPABASE_KEY;
+
+if (!supabaseUrl || !supabaseKey) {
+  throw new Error('Missing EXPO_PUBLIC_SUPABASE_URL or EXPO_PUBLIC_SUPABASE_KEY environment variables.');
+}
+
 export const supabase = createClient(
-  process.env.EXPO_PUBLIC_SUPABASE_URL,
-  process.env.EXPO_PUBLIC_SUPABASE_KEY,
+  supabaseUrl,
+  supabaseKey,
   {
     auth: {
       storage: SecureStoreAdapter as any,
       autoRefreshToken: true,
       persistSession: true,
       detectSessionInUrl: false,
-      lock: processLock,
     },
   })

@@ -13,7 +13,6 @@ interface LoadingProps {
 }
 
 const Loading: React.FC<LoadingProps> = ({ message: initialMessage, showRetry: initialShowRetry = false, onRetry, onConnected, onNavigateToError }) => {
-  const s: any = styles;
   const [message, setMessage] = useState<string | undefined>(initialMessage ?? 'Loading Application...');
   const [showRetry, setShowRetry] = useState<boolean>(initialShowRetry);
 
@@ -48,13 +47,13 @@ const Loading: React.FC<LoadingProps> = ({ message: initialMessage, showRetry: i
   }, [runChecks]);
 
   return (
-    <View style={s.container}>
-      <Image source={require('@/assets/spartan-macro.png')} style={s.logo} resizeMode="contain" />
-      <ActivityIndicator size="large" color={COLORS.primary} style={s.indicator} />
-      <Text style={s.text}>{message ?? 'Loading Application...'}</Text>
+    <View style={styles.container}>
+      <Image source={require('@/assets/theron-app-logo.png')} style={styles.logo} resizeMode="contain" />
+      <ActivityIndicator size="large" color={COLORS.primary} style={styles.indicator} />
+      <Text style={styles.text}>{message ?? 'Loading Application...'}</Text>
       {(showRetry || initialShowRetry) && (
         <TouchableOpacity
-          style={s.retryButton}
+          style={styles.retryButton}
           onPress={() => {
             setShowRetry(false);
             setMessage('Retrying...');
@@ -63,7 +62,7 @@ const Loading: React.FC<LoadingProps> = ({ message: initialMessage, showRetry: i
           }}
           activeOpacity={0.8}
         >
-          <Text style={s.retryButtonText}>Retry</Text>
+          <Text style={styles.retryButtonText}>Retry</Text>
         </TouchableOpacity>
       )}
     </View>

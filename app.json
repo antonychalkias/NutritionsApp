@@ -1,17 +1,19 @@
 {
   "expo": {
-    "name": "NutritionsApp",
-    "slug": "nutritionsapp",
+    "name": "Theron",
+    "slug": "theronapp",
     "version": "1.0.0",
-    "icon": "./src/assets/spartan-macro.png",
+    "icon": "./src/assets/theron-logo-transparent.png",
     "entryPoint": "src/app/index.tsx",
-    "scheme": "nutritionsapp",
-    "backgroundColor": "#0a0a0a",
+    "scheme": "Theron",
+    "backgroundColor": "#222225",
     "android": {
-      "backgroundColor": "#0a0a0a"
+      "backgroundColor": "#222225",
+      "softwareKeyboardLayoutMode": "pan"
     },
     "ios": {
-      "backgroundColor": "#0a0a0a"
+      "backgroundColor": "#222225",
+      "bundleIdentifier": "com.anonymous.theronapp"
     },
     "plugins": [
       [
@@ -20,7 +22,9 @@
           "userInterfaceStyle": "dark"
         }
       ],
-      "expo-secure-store"
+      "expo-secure-store",
+      "expo-image",
+      "expo-router"
     ]
   }
 }

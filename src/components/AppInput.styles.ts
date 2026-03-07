@@ -33,7 +33,7 @@ export const styles = StyleSheet.create({
     backgroundColor: COLORS.card,
     color: COLORS.cardForeground,
     fontFamily: 'Inter',
-    marginBottom: 16,
+    marginBottom: 0,
   },
 });
 

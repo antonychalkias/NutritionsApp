@@ -5,12 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6393c375-45e1-40e7-9671-51b4bf44d93d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/assets/colours.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/theron-app-logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/theron-half.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/theron-high.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/theron-logo-transparent.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/theron-logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/theron.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/copilot-instructions.md" beforeDir="false" afterPath="$PROJECT_DIR$/.github/copilot-instructions.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AppInput.styles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AppInput.styles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constants/theme.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/theme.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/global.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/global.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/lib/utils/supabase.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/utils/supabase.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Auth/Auth.styles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Auth/Auth.styles.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Auth/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Auth/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Error/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Error/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Loading/Loading.styles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Loading/Loading.styles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Loading/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Loading/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Onboarding/Onboarding.styles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Onboarding/Onboarding.styles.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Onboarding/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Onboarding/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/supabase/migrations/001_enable_rls_profiles.sql" beforeDir="false" afterPath="$PROJECT_DIR$/supabase/migrations/001_enable_rls_profiles.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +49,7 @@
     </selectedModels>
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="26" />
+    <option name="cachedIndexableFilesCount" value="42" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="Git.Settings">
@@ -72,6 +92,7 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "git-widget-placeholder": "Account-creation-auth-signin-onboarding-pages",
+    "javascript.preferred.runtime.type.id": "node",
     "junie.onboarding.icon.badge.shown": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -79,7 +100,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_interpreter_path": "node",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.github.copilot.settings.customization.CustomizationConfigurable",
+    "settings.editor.selected.configurable": "com.anthropic.code.plugin.settings",
     "to.speed.mode.migration.done": "true",
     "ts.external.directory.path": "/Users/chalkiasantonios/Desktop/NutritionsApp/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
@@ -132,6 +153,7 @@
       <workItem from="1772537406400" duration="327000" />
       <workItem from="1772608700810" duration="14000" />
       <workItem from="1772609286105" duration="276000" />
+      <workItem from="1772903385856" duration="7935000" />
     </task>
     <servers />
   </component>

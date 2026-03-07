@@ -1,38 +1,28 @@
-# NutritionsApp
+# Theron — Gym, Nutrition & Macro Tracker
 
-This is a custom React Native (Expo + TypeScript) application. The default entry point is now `src/app/index.tsx`.
+React Native + TypeScript + Expo fitness app for tracking workouts and food macros, backed by Supabase.
+
+---
 
 ## Pages
 
-Each page has its own folder and component under `src/pages`.
+Each page has its own folder under `src/pages/<PageName>/` containing `index.tsx` and `<PageName>.styles.ts`.
 
-### /loading — Loading (src/pages/Loading)
-**What the user sees:**
-- The app logo (spartan-macro) and a loading bar are displayed while the application initializes.
-- This page provides a smooth transition into the app and reassures the user that the app is starting up.
-- Uses the color palette for a greenish background.
+| Page | Path | Description |
+|------|------|-------------|
+| Loading | `src/pages/Loading/` | Splash screen — checks network and Supabase connectivity |
+| Auth | `src/pages/Auth/` | Login and registration (email/password + Google/Apple OAuth) |
+| Onboarding | `src/pages/Onboarding/` | 4-step fitness profile setup: name/age → body stats → goal → activity level. Saves to Supabase and sets `is_onboarded = true` |
+| Error | `src/pages/Error/` | No-connection error screen with retry |
 
-### /auth — Auth (src/pages/Auth)
-**What the user sees:**
-- A login/registration form with a modern "bricks" UI: each input, button, and social option is a visually distinct card/brick.
-- Users can switch between login and registration modes, with clear buttons and consistent styles.
-- Registration form includes name, email, password, confirm password, and social registration options (Google, Apple).
-- Social login buttons show only the official trademark logos for Google and Apple, no text.
-- All inputs use the reusable AppInput component, supporting three sizes: small, large, xl.
-- The color palette and design system are applied for backgrounds, accents, and text.
-
-### /error — Error (src/pages/Error)
-**What the user sees:**
-- A simple error page shown when no internet connection is detected on startup.
-- Shows the app logo, a short message, and a Retry button which brings the user back to the Loading screen to re-run connectivity checks.
-
-### /onboarding — Onboarding (src/pages/Onboarding)
-**What the user sees:**
-- 4-step onboarding wizard (profile, body, goal, activity).
+---
 
 ## Entry Point
 
-The application starts from `src/app/index.tsx`, which renders the Loading page initially, then the Auth page.
+The application starts from `src/app/index.tsx`. On load it checks the Supabase connection, reads the session, and routes to:
+- `onboarding` — if session exists but `is_onboarded = false`
+- `home` — if session exists and `is_onboarded = true`
+- `auth` — if no session
 
 ## Get started
 
@@ -52,15 +42,36 @@ You can start developing by editing the files inside the **src/pages** directory
 
 ## Structure
 
-- `src/app/index.tsx` — Application entry point
-- `src/pages/Loading` — Loading screen component
-- `src/pages/Error` — Error screen shown when no internet connection is available
-- `src/pages/Auth` — Login/registration screen component
-- `src/pages/Onboarding` — 4-step onboarding wizard (profile, body, goal, activity)
-- `src/components/AppInput.tsx` — Reusable input component with size support
-- `src/constants/theme.ts` — Centralized color palette and design system
-- `src/assets/` — Assets folder (logos, icons)
-- `src/global.css` — Global styles
+```
+src/
+├── app/index.tsx              # Root router
+├── pages/
+│   ├── Loading/               # index.tsx + Loading.styles.ts
+│   ├── Auth/                  # index.tsx + Auth.styles.ts
+│   ├── Onboarding/            # index.tsx + Onboarding.styles.ts
+│   └── Error/                 # index.tsx + Error.styles.ts
+├── components/
+│   └── AppInput.tsx           # Shared input — sizes: small | large | xlarge
+├── lib/
+│   ├── api/
+│   │   └── profiles.ts        # All profiles DB calls (upsertProfile, getProfileIsOnboarded)
+│   ├── auth/
+│   │   └── AuthProvider.tsx   # Auth context
+│   └── utils/
+│       ├── supabase.ts        # Supabase client
+│       └── checks.ts          # Network + connectivity helpers
+├── constants/
+│   └── theme.ts               # COLORS palette and design tokens
+└── assets/                    # Logos, icons
+```
+
+### Database migrations (`supabase/migrations/`)
+
+| File | Description |
+|------|-------------|
+| `001_enable_rls_profiles.sql` | `profiles` table + RLS policies |
+| `002_secure_public_users.sql` | Secures legacy `public.users` if present |
+| `003_fitness_schema.sql` | Fitness columns on profiles, auto-create trigger, `body_measurements`, `food_logs`, `workout_sessions`, `workout_exercises` |
 
 ## Design System
 
